@@ -23,7 +23,7 @@ def shortenURL(request):
             #create random shortURL
             #It's possible, but unlikely, this isn't unique
             shortURL = uuid.uuid4().hex[:10].upper()
-                       
+
             try:
                 savedShortUrl = utils.createShortURL(shortURL, urls["mobile"], urls["desktop"], urls["tablet"])
                 success = True
@@ -62,8 +62,21 @@ def redirect(request, shorturl):
             #debug
             #return HttpResponse(serializers.serialize('json', [urlObject]))
 def getUrls(request):
-    urls = ShortUrl.objects.all()
-    #for shorturl in urls:
+    urls = list(ShortUrl.objects.all())
+    print urls[0].url_age
 
-
+    """
+    for url in urls:
+        url.fields.append("urlAge: %s" % url.url_age)
+    """
     return HttpResponse(serializers.serialize('json', urls))
+
+
+{
+"model": "shorty.shorturl", "pk": "138CA2", "fields":
+
+    {"fullMobileUrl": "m.foo.com", "fullDesktopUrl": "d.foo.com",
+    "fullTabletUrl": "t.foo.com", "desktopRedirectCount": 2,
+    "mobileRedirectCount": 0, "tabletRedirectCount": 0,
+    "dateCreated": "2016-06-28T05:09:50.767Z"}
+}

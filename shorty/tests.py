@@ -6,13 +6,13 @@ import uuid
 import json
 
 class UnitTests(TestCase):
-    def testCreateShortURL(self):
+    def test_create_short_url(self):
         shortURL = uuid.uuid4().hex[:10].upper()
         shortUrlPostSave = utils.createShortURL(shortURL, 'm.google.com',
                                         'google.com', 't.google.com')
         self.assertEqual(shortUrlPostSave, shortURL)
 
-    def testDupeShortUrl(self):
+    def test_dupe_short_url(self):
         shortURL = 'steven'
         with self.assertRaises(IntegrityError):
             shortUrlPostSave = utils.createShortURL(shortURL, 'm.google.com',
@@ -21,7 +21,7 @@ class UnitTests(TestCase):
                                 'google.com', 't.google.com')
 
 class IntegrationTests(TestCase):
-    def testShortenUrl(self):
+    def test_shortenUrl(self):
         jsonArgs = {
             "mobile":"http://m.foo.com",
             "tablet":"http://t.foo.com",
@@ -32,8 +32,3 @@ class IntegrationTests(TestCase):
                                     json.dumps(jsonArgs),
                                     content_type="application/json")
         self.assertEqual(response.status_code, 200)
-
-    def testRedirects(self):
-        self.assertRedirects(response, expected_url, status_code=302,
-                            target_status_code=200, host=None, msg_prefix='',
-                            fetch_redirect_response=True)

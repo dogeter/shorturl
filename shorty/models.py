@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
-
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 class ShortUrl(models.Model):
@@ -12,3 +12,7 @@ class ShortUrl(models.Model):
     mobileRedirectCount = models.PositiveIntegerField(default=0)
     tabletRedirectCount = models.PositiveIntegerField(default=0)
     dateCreated = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def url_age(self):
+        return timezone.now() - self.dateCreated
