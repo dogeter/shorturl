@@ -15,8 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from views import create, load
+from views import shortenURL, redirect, getUrls
 urlpatterns = [
-    url(r'^create/', create),
-    url(r'^shorturl/(?P<shorturl>\w+)/$', load),
+    url(r'^shortenurl/', shortenURL),
+    url(r'^geturls/', getUrls),
+    url(r'^(?P<shorturl>\w+)/$', redirect),    
 ]
