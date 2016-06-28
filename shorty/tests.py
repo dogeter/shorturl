@@ -32,3 +32,8 @@ class IntegrationTests(TestCase):
                                     json.dumps(jsonArgs),
                                     content_type="application/json")
         self.assertEqual(response.status_code, 200)
+
+    def testRedirects(self):
+        self.assertRedirects(response, expected_url, status_code=302,
+                            target_status_code=200, host=None, msg_prefix='',
+                            fetch_redirect_response=True)
