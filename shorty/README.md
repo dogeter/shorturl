@@ -24,5 +24,3 @@ Now change your user agent to a tablet UA and try 1 more time.
 
 Get all the urls
 http://127.0.0.1:8000/geturls
-This extension makes it to read in Chrome
-https://chrome.google.com/webstore/detail/jsonview/chklaanhfefbnpoihckbnefhakgolnmc
