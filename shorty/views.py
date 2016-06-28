@@ -62,21 +62,17 @@ def redirect(request, shorturl):
             #debug
             #return HttpResponse(serializers.serialize('json', [urlObject]))
 def getUrls(request):
-    urls = list(ShortUrl.objects.all())
-    print urls[0].url_age
+    urls = ShortUrl.objects.all()
+    outputString = ''
 
-    """
     for url in urls:
-        url.fields.append("urlAge: %s" % url.url_age)
-    """
-    return HttpResponse(serializers.serialize('json', urls))
+        outputString += 'ShortUrl: %s \n' % (url.shortid)
+        outputString += 'Age: %s ' % (url.url_age)
+        outputString += 'Desktop URL: %s (%s hits) ' % (url.fullDesktopUrl, url.desktopRedirectCount)
+        outputString += 'Mobile URL: %s (%s hits) ' % (url.fullMobileUrl, url.mobileRedirectCount)
+        outputString += 'Tablet URL: %s (%s hits) ' % (url.fullTabletUrl, url.tabletRedirectCount)
+        outputString += '\n'
 
-
-{
-"model": "shorty.shorturl", "pk": "138CA2", "fields":
-
-    {"fullMobileUrl": "m.foo.com", "fullDesktopUrl": "d.foo.com",
-    "fullTabletUrl": "t.foo.com", "desktopRedirectCount": 2,
-    "mobileRedirectCount": 0, "tabletRedirectCount": 0,
-    "dateCreated": "2016-06-28T05:09:50.767Z"}
-}
+    json.dumps(outputString)
+    return HttpResponse(outputString)
+    #return HttpResponse(serializers.serialize('json', urls))
